@@ -1,8 +1,10 @@
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
 const promClient = require('prom-client');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 443;
 
 const httpRequestCounter = new promClient.Counter({
   name: 'http_requests_total',
@@ -25,6 +27,6 @@ app.get('/metrics', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+https.createServer(options, app).listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
