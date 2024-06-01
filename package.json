@@ -9,7 +9,9 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.5.2",
     "axios": "^1.6.8",
+    "express": "^4.19.2",
     "firebase": "^10.11.0",
+    "prom-client": "^15.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
@@ -43,7 +45,7 @@
     ]
   },
   "main": "index.js",
-  "repository": "https://github.com/Christmp19/clone-netflix.git",
-  "author": "Chritie MPASSI <christmp19@gmail.com>",
+  "repository": "https://github.com/stevevila/netflix.git",
+  "author": "Stevalore vila <vstevalore@gmail.com>",
   "license": "MIT"
 }
