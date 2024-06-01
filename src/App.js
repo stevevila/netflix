@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Metrics from './Metrics';
 import './App.css';
 import HomeScreen from './screens/HomeScreen';
 import LoginSreen from './screens/LoginSreen';
@@ -41,7 +40,6 @@ function App() {
             </Routes>
           )}
       </Router>
-      <Metrics />
     </div>
   );
 }

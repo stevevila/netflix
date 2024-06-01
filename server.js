@@ -1,22 +1,30 @@
 const express = require('express');
-const { httpMiddleware, exposeMetrics } = require('./metrics');
 const promClient = require('prom-client');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware pour les métriques HTTP
-app.use(httpMiddleware);
+const httpRequestCounter = new promClient.Counter({
+  name: 'http_requests_total',
+  help: 'Total number of HTTP requests',
+});
 
-// Route pour les métriques Prometheus
-app.get('/metrics', exposeMetrics);
-
-// Route d'accueil
 app.get('/', (req, res) => {
+  httpRequestCounter.inc();
   res.send('Hello World!');
 });
 
-// Démarrer le serveur
+app.get('/metrics', async (req, res) => {
+  try {
+    res.set('Content-Type', promClient.register.contentType);
+    const metrics = promClient.register.metrics();
+    res.end(metrics);
+  } catch (err) {
+    console.error('Error generating metrics:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
