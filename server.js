@@ -14,11 +14,17 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/metrics', (req, res) => {
-  res.set('Content-Type', promClient.register.contentType);
-  res.end(promClient.register.metrics());
+app.get('/metrics', async (req, res) => {
+  try {
+    res.set('Content-Type', promClient.register.contentType);
+    const metrics = promClient.register.metrics();
+    res.end(metrics);
+  } catch (err) {
+    console.error('Error generating metrics:', err);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-app.listen(3001, () => {
-  console.log(`Server is running on port 3001`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
